@@ -5,10 +5,6 @@ class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self._last_member = None
-    
-    @commands.command(name='hello')
-    async def testfunc(self, ctx):
-        await ctx.send("hi!")
 
     @commands.command(name='log')
     async def logspirit(self, ctx, item: str, count: int):
