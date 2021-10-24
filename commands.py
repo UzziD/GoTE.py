@@ -26,3 +26,12 @@ class Commands(commands.Cog):
 
         #await ctx.send("you've logged {} {}".format(count, item))
         #print()
+    
+    @logspirit.error
+    async def on_command_error(self,ctx,error):
+        if isinstance(error, commands.BadArgument):
+            await ctx.send("Invalid arguments provided. Format: !log <item name> <count of item>")
+        else:
+            print("error on command: {}".format(ctx.command))
+            await ctx.send("There was an error!")
+
