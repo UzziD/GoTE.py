@@ -12,23 +12,12 @@ class Commands(commands.Cog):
         self._last_member = None
 
     @commands.command(name='log')
-    async def logspirit(self, ctx, item: str, count: int):
-        """
-        try:
-            db = open("log.csv", 'a')
-            try:
-                db.write("{},{}\n".format(item, count))
-                await ctx.send("Logged: {} {}".format(count, item))
-            except Exception as e:
-                await ctx.send("Error writing to file.")
-                print("Exception occured: {}".format(e))
-            finally:
-                db.close()
-        except Exception as e:
-            await ctx.send("Error opening file.")
-            print("Exception occured: {}".format(e))
-        """
-        #be sure to clean/check input before sending req
+    async def logspirit(self, ctx, count: int, *items):
+
+        if count <= 0:
+            raise commands.BadArgument
+
+        item = ' '.join(items)
 
         entryUrl = "http://" + IP + "/addEntry/"
 
@@ -50,7 +39,7 @@ class Commands(commands.Cog):
     @logspirit.error
     async def logspirit_error(self,ctx,error):
         if isinstance(error, commands.BadArgument):
-            await ctx.send("Invalid arguments provided. Format: !log <item name> <count of item>")
+            await ctx.send("Invalid arguments provided. Format: !log <item name> <positive count of item>")
         else:
             print("error on command: {}".format(ctx.command))
             print(error)
